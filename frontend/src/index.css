@@ -12,6 +12,8 @@ body {
     radial-gradient(circle at top left, rgba(45, 212, 191, 0.18), transparent 28rem),
     radial-gradient(circle at 85% 10%, rgba(255, 107, 74, 0.14), transparent 24rem),
     linear-gradient(135deg, #FAFAF7 0%, #F2F7F4 45%, #FFF8F3 100%);
+  background-size: 140% 140%, 130% 130%, 100% 100%;
+  animation: premiumBackdrop 18s ease-in-out infinite alternate;
   color: #171A2E;
   font-family: 'Inter', sans-serif;
 }
@@ -27,6 +29,7 @@ body::before {
     linear-gradient(90deg, rgba(23, 26, 46, 0.045) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 78%);
+  animation: gridDrift 28s linear infinite;
 }
 
 #root {
@@ -45,11 +48,26 @@ input:focus-visible {
 
 @layer components {
   .btn-primary {
+    position: relative;
+    overflow: hidden;
     @apply bg-ink text-paper font-display font-semibold px-5 py-2.5 rounded-lg
            hover:bg-coral hover:text-ink hover:-translate-y-0.5
            active:translate-y-0 transition-all duration-200 disabled:opacity-50
            disabled:cursor-not-allowed disabled:hover:translate-y-0;
     box-shadow: 0 18px 55px rgba(23, 26, 46, 0.10);
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.32) 48%, transparent 72%);
+    transform: translateX(-115%);
+    transition: transform 620ms ease;
+  }
+
+  .btn-primary:hover::after {
+    transform: translateX(115%);
   }
 
   .btn-secondary {
@@ -66,27 +84,95 @@ input:focus-visible {
   }
 
   .card {
+    position: relative;
     @apply bg-white/80 backdrop-blur-xl border border-white/70 rounded-xl;
     box-shadow: 0 18px 55px rgba(23, 26, 46, 0.10);
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.54), transparent 34%, rgba(45, 212, 191, 0.12));
+    opacity: 0.55;
   }
 
   .short-code-pill {
     @apply font-mono text-sm font-medium bg-ink text-teal px-2.5 py-1 rounded-md
            tracking-wide;
+    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
   }
 
   .icon-button {
     @apply p-2 rounded-lg border border-line bg-white/70 hover:-translate-y-0.5
            active:translate-y-0 transition-all duration-150;
+    box-shadow: 0 8px 20px rgba(23, 26, 46, 0.06);
   }
 
   .surface-panel {
+    position: relative;
     @apply border border-white/70 bg-white/55 backdrop-blur-xl rounded-xl;
     box-shadow: 0 18px 55px rgba(23, 26, 46, 0.10);
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
   }
 
   .fade-in-up {
     animation: fadeInUp 560ms ease both;
+  }
+
+  .page-motion {
+    animation: pageRise 680ms cubic-bezier(0.2, 0.75, 0.22, 1) both;
+  }
+
+  .stagger-children > * {
+    animation: fadeInUp 620ms cubic-bezier(0.2, 0.75, 0.22, 1) both;
+  }
+
+  .stagger-children > *:nth-child(1) {
+    animation-delay: 40ms;
+  }
+
+  .stagger-children > *:nth-child(2) {
+    animation-delay: 120ms;
+  }
+
+  .stagger-children > *:nth-child(3) {
+    animation-delay: 200ms;
+  }
+
+  .stagger-children > *:nth-child(4) {
+    animation-delay: 280ms;
+  }
+
+  .premium-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(45, 212, 191, 0.42);
+    box-shadow: 0 24px 70px rgba(23, 26, 46, 0.14);
+  }
+
+  .float-subtle {
+    animation: floatSubtle 5.5s ease-in-out infinite;
+  }
+
+  .pulse-dot {
+    animation: pulseDot 2.2s ease-in-out infinite;
+  }
+
+  .shine-line {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shine-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 22%, rgba(255, 255, 255, 0.34) 50%, transparent 78%);
+    transform: translateX(-120%);
+    animation: sheen 4.8s ease-in-out infinite;
   }
 
   .shadow-soft {
@@ -95,6 +181,51 @@ input:focus-visible {
 
   .shadow-glow {
     box-shadow: 0 18px 45px rgba(45, 212, 191, 0.22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+@keyframes premiumBackdrop {
+  from {
+    background-position: 0% 0%, 100% 0%, 0% 0%;
+  }
+
+  to {
+    background-position: 18% 8%, 82% 18%, 0% 0%;
+  }
+}
+
+@keyframes gridDrift {
+  from {
+    background-position: 0 0, 0 0;
+  }
+
+  to {
+    background-position: 44px 44px, 44px 44px;
+  }
+}
+
+@keyframes pageRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.992);
+    filter: blur(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -107,5 +238,41 @@ input:focus-visible {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes floatSubtle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.58;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes sheen {
+  0%,
+  35% {
+    transform: translateX(-120%);
+  }
+
+  68%,
+  100% {
+    transform: translateX(120%);
   }
 }

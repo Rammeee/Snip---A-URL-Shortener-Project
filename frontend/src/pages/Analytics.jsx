@@ -47,22 +47,22 @@ export default function Analytics() {
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 fade-in-up">
+    <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 page-motion">
       <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-sm font-display font-semibold text-muted hover:text-ink hover:-translate-x-0.5 mb-6 transition-all">
         <FiArrowLeft size={16} />
         Back to dashboard
       </Link>
 
       {loading ? (
-        <div className="card p-10 flex items-center justify-center">
+        <div className="card p-10 flex items-center justify-center fade-in-up">
           <div className="h-8 w-8 border-2 border-line border-t-coral rounded-full animate-spin" />
         </div>
       ) : error ? (
-        <div className="card p-6 text-center text-coral font-body">{error}</div>
+        <div className="card p-6 text-center text-coral font-body fade-in-up">{error}</div>
       ) : (
-        <>
+        <div className="stagger-children">
           {/* --- Summary card --- */}
-          <div className="card p-6 mb-6 relative overflow-hidden">
+          <div className="card premium-hover p-6 mb-6 relative overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-teal via-coral to-ink" />
             <h1 className="font-display font-bold text-2xl text-ink mb-4">Link analytics</h1>
 
@@ -94,15 +94,15 @@ export default function Analytics() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-line">
-                <div className="surface-panel p-4 shadow-none">
+                <div className="surface-panel premium-hover p-4 shadow-none">
                   <p className="text-xs font-display font-semibold text-muted uppercase tracking-wide mb-1">Total Clicks</p>
                   <p className="text-2xl font-display font-bold text-ink">{summary.clickCount}</p>
                 </div>
-                <div className="surface-panel p-4 shadow-none">
+                <div className="surface-panel premium-hover p-4 shadow-none">
                   <p className="text-xs font-display font-semibold text-muted uppercase tracking-wide mb-1">Created</p>
                   <p className="text-sm text-ink font-body mt-1.5">{formatDateTime(summary.createdAt)}</p>
                 </div>
-                <div className="surface-panel p-4 shadow-none">
+                <div className="surface-panel premium-hover p-4 shadow-none">
                   <p className="text-xs font-display font-semibold text-muted uppercase tracking-wide mb-1">Last Visited</p>
                   <p className="text-sm text-ink font-body mt-1.5">
                     {summary.lastVisitedAt ? formatDateTime(summary.lastVisitedAt) : 'Not yet visited'}
@@ -113,14 +113,18 @@ export default function Analytics() {
           </div>
 
           {/* --- Recent visits --- */}
-          <div className="card p-6">
+          <div className="card premium-hover p-6">
             <h2 className="font-display font-bold text-lg text-ink mb-4">Recent visits</h2>
             {recentVisits.length === 0 ? (
               <p className="text-muted text-sm font-body">No visits recorded yet for this link.</p>
             ) : (
               <ul className="divide-y divide-line">
-                {recentVisits.map((visit) => (
-                  <li key={visit.id} className="py-3 text-sm text-ink font-body flex items-center gap-2">
+                {recentVisits.map((visit, index) => (
+                  <li
+                    key={visit.id}
+                    className="py-3 text-sm text-ink font-body flex items-center gap-2 fade-in-up"
+                    style={{ animationDelay: `${index * 45}ms` }}
+                  >
                     <span className="h-2 w-2 rounded-full bg-teal shadow-glow" />
                     {formatDateTime(visit.visitedAt)}
                   </li>
@@ -128,7 +132,7 @@ export default function Analytics() {
               </ul>
             )}
           </div>
-        </>
+        </div>
       )}
     </main>
   );

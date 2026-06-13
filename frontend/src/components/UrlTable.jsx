@@ -20,7 +20,7 @@ export default function UrlTable({ urls, onDelete }) {
 
   if (urls.length === 0) {
     return (
-      <div className="card p-10 text-center fade-in-up">
+      <div className="card premium-hover p-10 text-center fade-in-up">
         <p className="font-display font-semibold text-lg text-ink mb-1">No links yet</p>
         <p className="text-muted text-sm font-body">
           Paste a URL above and hit Shorten to create your first link.
@@ -43,8 +43,12 @@ export default function UrlTable({ urls, onDelete }) {
           </tr>
         </thead>
         <tbody>
-          {urls.map((url) => (
-            <tr key={url.id} className="border-b border-line last:border-0 hover:bg-white/65 transition-colors">
+          {urls.map((url, index) => (
+            <tr
+              key={url.id}
+              className="border-b border-line last:border-0 hover:bg-white/65 transition-all duration-200 fade-in-up"
+              style={{ animationDelay: `${index * 45}ms` }}
+            >
               <td className="px-5 py-4 max-w-xs">
                 <p className="truncate text-sm text-ink font-body" title={url.originalUrl}>
                   {url.originalUrl}
@@ -55,7 +59,7 @@ export default function UrlTable({ urls, onDelete }) {
                   href={url.shortUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                    className="short-code-pill inline-flex items-center gap-1.5 hover:bg-coral hover:text-ink hover:-translate-y-0.5 transition-all"
+                  className="short-code-pill inline-flex items-center gap-1.5 hover:bg-coral hover:text-ink hover:-translate-y-0.5 transition-all"
                 >
                   /{url.shortCode}
                   <FiExternalLink size={12} />
@@ -95,8 +99,8 @@ export default function UrlTable({ urls, onDelete }) {
 
       {/* --- Mobile cards --- */}
       <div className="md:hidden divide-y divide-line">
-        {urls.map((url) => (
-          <div key={url.id} className="p-4 bg-white/35">
+        {urls.map((url, index) => (
+          <div key={url.id} className="p-4 bg-white/35 fade-in-up" style={{ animationDelay: `${index * 55}ms` }}>
             <p className="truncate text-sm text-ink font-body mb-2" title={url.originalUrl}>
               {url.originalUrl}
             </p>

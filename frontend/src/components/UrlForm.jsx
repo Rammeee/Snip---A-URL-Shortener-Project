@@ -51,7 +51,7 @@ export default function UrlForm({ onUrlCreated }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card p-5 sm:p-6 relative overflow-hidden">
+    <form onSubmit={handleSubmit} className="card premium-hover p-5 sm:p-6 relative overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-teal via-coral to-ink" />
       <label htmlFor="originalUrl" className="flex items-center gap-2 font-display font-semibold text-ink mb-3">
         <span className="inline-flex rounded-lg bg-teal/15 p-2 text-teal">

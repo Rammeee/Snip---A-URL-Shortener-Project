@@ -43,16 +43,16 @@ export default function Login() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md fade-in-up">
-        <div className="text-center mb-8">
-          <span className="inline-flex bg-ink text-coral rounded-xl p-3 mb-4 shadow-glow">
+      <div className="w-full max-w-md page-motion">
+        <div className="text-center mb-8 stagger-children">
+          <span className="inline-flex bg-ink text-coral rounded-xl p-3 mb-4 shadow-glow float-subtle">
             <FiLink size={24} />
           </span>
           <h1 className="font-display font-bold text-2xl text-ink">Welcome back</h1>
           <p className="text-muted text-sm mt-1 font-body">Log in to manage your short links</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="card p-6 space-y-4 relative overflow-hidden">
+        <form onSubmit={handleSubmit} className="card premium-hover p-6 space-y-4 relative overflow-hidden fade-in-up" style={{ animationDelay: '120ms' }}>
           <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-coral via-teal to-ink" />
           {errors.form && (
             <div className="bg-coral/10 border border-coral/30 text-coral text-sm rounded-lg px-3 py-2 font-body">
